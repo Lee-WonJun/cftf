@@ -2,7 +2,7 @@
 
 (defn- generation-function [function-name ratio]
   (let [function-symbol        (symbol function-name)]
-    (intern *ns* function-symbol (fn [input] (convert ratio input)))))
+    (intern 'cftf.core function-symbol (fn [input] (cftf.core/convert ratio input)))))
 
 (defn- unit-combination
   [units]
@@ -28,7 +28,7 @@
          second-unit (comp second second)]
      (create-unit-ratio (first-unit unit-pair) (second-unit unit-pair))))
   ([from to]
-   (/ to from)))
+   (/ from to)))
 
 (defn- units->function-name-and-ratio [units]
   (map (juxt create-function-name create-unit-ratio) (unit-combination units)))
