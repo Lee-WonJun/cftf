@@ -1,9 +1,5 @@
 (ns cftf.core)
 
-(defn- generation-function [function-name ratio]
-  (let [function-symbol        (symbol function-name)]
-    (intern 'cftf.core function-symbol (fn [input] (cftf.core/convert ratio input)))))
-
 (defn- unit-combination
   [units]
   (for [key1 units key2 units]
@@ -39,7 +35,12 @@
   ([ratio input-value]
    (* input-value ratio)))
 
+(defn- generation-function [function-name ratio]
+  (let [function-symbol        (symbol function-name)]
+    (intern 'cftf.core function-symbol (fn [input] (cftf.core/convert ratio input)))))
+
 (defn generate-function-by-units [units]
   (->> units
        (units->function-name-and-ratio)
-       (map #(generation-function (first %) (second %)))))
+       (map #(generation-function (first %) (second %)))
+       (doall)))
